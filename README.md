@@ -21,7 +21,7 @@ FBX Export Presets go in
 
 C:\Users\ [username] \AppData\Roaming\Blender Foundation\Blender\ [version] \scripts\presets\operator\export_scene.fbx\
 
-open a file explorer window type 
+open a file explorer window and type or paste
 
 %AppData%
 
