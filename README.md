@@ -30,3 +30,5 @@ in the url bar, enter, paste
 \Blender Foundation\Blender\2.79\scripts\presets\operator\export_scene.fbx\
 
 after it, enter
+
+If these folders do not exist, you will have to create them.
