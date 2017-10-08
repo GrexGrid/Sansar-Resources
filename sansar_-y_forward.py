@@ -1,7 +1,7 @@
 import bpy
 op = bpy.context.active_operator
 
-op.filepath = 'D:\\Desktop Backup\\1Sansar\\models\\quad bike.fbx'
+op.filepath = 'C:\\'
 op.axis_forward = '-Y'
 op.axis_up = 'Z'
 op.version = 'BIN7400'
