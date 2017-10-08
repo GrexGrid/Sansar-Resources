@@ -3,23 +3,23 @@ Items to use for Sansar and Blender
 
 ----
 
-Sansar Object Blank.blend empty scene with male avatar for scale
+Sansar Object Blank.blend : Empty scene with male avatar for scale, and 2 hidden suns for material viewing
 
-Sansar Attachment Blank.blend empty scene with male av on layer 1 and female av on layer 2, AABB Limit and max size bounding boxes included.
+Sansar Attachment Blank.blend : Empty scene with male av on layer 1 and female av on layer 2, AABB Limit and max size bounding boxes, 2 hidden suns for material viewing.
 
 ----
 
 FBX export presets
 
-sansar_attachment.py for Avatar attachments
+sansar_attachment.py : for Avatar attachments
 
-sansar_-y_forward.py for obects with their fronts pointing in the -y direction
+sansar_-y_forward.py : for obects with their fronts pointing in the -y direction
 
 ----
 
-fbx export presets go in
+FBX Export Presets go in
 
-C:\Users\[username]\AppData\Roaming\Blender Foundation\Blender\2.79\scripts\presets\operator\export_scene.fbx\
+C:\Users\ [username] \AppData\Roaming\Blender Foundation\Blender\ [version] \scripts\presets\operator\export_scene.fbx\
 
 open a file explorer window type 
 
@@ -27,6 +27,6 @@ open a file explorer window type
 
 in the url bar, enter, paste
 
-\Blender Foundation\Blender\2.79\scripts\presets\operator\export_scene.fbx
+\Blender Foundation\Blender\2.79\scripts\presets\operator\export_scene.fbx\
 
 after it, enter
