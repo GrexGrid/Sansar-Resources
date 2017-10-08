@@ -1,7 +1,7 @@
 import bpy
 op = bpy.context.active_operator
 
-op.filepath = 'D:\\Desktop Backup\\1Sansar\\models\\emot head female.fbx'
+op.filepath = 'C:'
 op.axis_forward = '-Z'
 op.axis_up = 'Y'
 op.version = 'BIN7400'
