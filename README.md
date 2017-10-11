@@ -1,5 +1,5 @@
 # Sansar-Resources
-Items to use for Sansar and Blender
+Items to help building things for Sansar
 
 ----
 
