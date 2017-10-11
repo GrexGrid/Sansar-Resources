@@ -1,0 +1,3 @@
+# Substance Painter Resources
+
+----
