@@ -1,3 +1,10 @@
+Blender Resources
+----
+
+Sansar Object Blank.blend : Empty scene with male avatar for scale, and 2 hidden suns for material viewing
+
+Sansar Attachment Blank.blend : Empty scene with male av on layer 1 and female av on layer 2, AABB Limit and max size bounding boxes, 2 hidden suns for material viewing.
+
 ----
 
 FBX export presets
