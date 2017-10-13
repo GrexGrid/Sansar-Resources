@@ -59,8 +59,9 @@ public class template : SceneObjectScript
     void OnChat(int Channel, string Source, SessionId SourceId, ScriptId SourceScriptId, string Message)
     {
         Message = Message.ToLower(); // lower case message
+
         AgentPrivate agent=ScenePrivate.FindAgent(SourceId);
-        if (agent == null) return;
+        if (agent == null) return; // only listen to agents
 
         string[] word = Message.Split( new char[] { ' ' } ); // tokenise
         
