@@ -41,11 +41,6 @@ public class template : SceneObjectScript
         ScenePrivate.Chat.MessageAllUsers(Message);
     }//DelayedMessage
 
-    private void UnhandledException(object Sender, Exception Ex) 
-    {
-        Log.Write(LogLevel.Error, GetType().Name, Ex.Message + "\n" + Ex.StackTrace.Substring(0, 300));
-    }//UnhandledException
-
 //------Events--------
 
     public override void Init()
@@ -55,6 +50,11 @@ public class template : SceneObjectScript
         ScenePrivate.User.Subscribe(User.AddUser, NewUser); // subscribe to new users
         Log.Write(LogLevel.Info,"Init", GetType().Name + "template loaded");
     }//init
+
+    private void UnhandledException(object Sender, Exception Ex) 
+    {
+        Log.Write(LogLevel.Error, GetType().Name, Ex.Message + "\n" + Ex.StackTrace.Substring(0, 300));
+    }//UnhandledException
 
     void OnChat(int Channel, string Source, SessionId SourceId, ScriptId SourceScriptId, string Message)
     {
