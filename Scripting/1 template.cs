@@ -71,7 +71,6 @@ public class template : SceneObjectScript
         {
             SendMessage("heard stuff");
         }
-
     }//onchat
 
     void NewUser(string action, SessionId SourceId, string data)
