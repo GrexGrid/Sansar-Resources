@@ -48,7 +48,7 @@ public class template : SceneObjectScript
         Script.UnhandledException += UnhandledException; // catch errors and keep running unless fatal
         ScenePrivate.Chat.Subscribe(ChatChannel, Chat.User, OnChat); // subscribe to user chat
         ScenePrivate.User.Subscribe(User.AddUser, NewUser); // subscribe to new users
-        Log.Write(LogLevel.Info,"Init", GetType().Name + "template loaded");
+        Log.Write(LogLevel.Info,"Init", GetType().Name + " loaded");
     }//init
 
     private void UnhandledException(object Sender, Exception Ex) 
