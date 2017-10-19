@@ -8,7 +8,7 @@ C:\Users\USERNAME\.gimp-VERSION\scripts\
 
 example:
 
-C:\Users\OldVamp\.gimp-2.8\scripts
+C:\Users\OldVamp\\.gimp-2.8\scripts
 
 ----
 
