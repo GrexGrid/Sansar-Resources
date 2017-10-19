@@ -4,7 +4,7 @@
 
 GIMP Scripts go in
 
-C:\Users\USERNAME\.gimp-VERSION\scripts\
+C:\Users\USERNAME\\.gimp-VERSION\scripts\
 
 example:
 
