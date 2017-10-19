@@ -1,5 +1,7 @@
 # GIMP Resources
 
+https://www.gimp.org/
+
 ----
 
 GIMP Scripts go in
