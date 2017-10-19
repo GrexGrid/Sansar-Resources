@@ -1,0 +1,76 @@
+get VSCode
+
+https://code.visualstudio.com/
+
+install the c# extension from VSCode extensions tab, squares icon
+
+get and install .net core
+
+https://www.microsoft.com/net/core
+
+get and install The Microsoft .NET Framework 4.6.2 Developer Pack
+
+https://www.microsoft.com/en-us/download/details.aspx?id=53321
+
+create a folder called VSCode Sansar
+
+Find some working .dll's for sansar and optionally mono.simd, and move or extract them to your folder
+
+The ones LL provides are at C:\Program Files\Sansar\Client\ScriptApi\Assemblies
+
+from VSCode file, open folder, open your VSCode Sansar folder
+
+type control backtick (tilde, usually above tab), to open a terminal
+
+type dotnet new classlib
+
+open VSCode Sansar.csproj and change it to look like this
+
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net462</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Mono.Simd">
+      <HintPath>C:\Tutorial\VSCode Sansar\Mono.Simd.dll</HintPath>
+    </Reference>
+    <Reference Include="Sansar.Script">
+      <HintPath>C:\Tutorial\VSCode Sansar\Sansar.Script.dll</HintPath>
+    </Reference>
+    <Reference Include="Sansar.Simulation">
+      <HintPath>C:\Tutorial\VSCode Sansar\Sansar.Simulation.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+  </ItemGroup>
+</Project>
+
+Save and reopen VSCode
+
+copy FollowThePath.cs to your VSCode Sansar folder, can be found at C:\Program Files\Sansar\Client\ScriptApi\Examples
+
+open it from VSCode
+
+VSCode will complain: VSCode Sansar\obj\project.assets.json' doesn't have a target for '.NETFramework,Version=v4.6.2'
+
+open your terminal again, type dotnet restore
+
+close and reopen VSCode
+
+open FollowThePath.cs
+
+go to the debug tab, (icon with bug a no sign over it)
+
+at the top select .net core launch console, from the down arrow
+
+click the gear with the orange dot, this shold open launch.json
+
+change the 2 lines of
+${workspaceRoot}/bin/Debug/<insert-target-framework-here>/<insert-project-name-here>.dll
+to
+${workspaceRoot}/bin/Debug/net462/VSCode Sansar.dll
+
+close and reopen VSCode
+
+you should now be able to edit FollowThePath.cs with intellisense
+
+copy the other examples to your VSCode Sansar folder or create your own new .cs files.
