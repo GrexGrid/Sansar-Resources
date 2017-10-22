@@ -6,11 +6,19 @@ Items to help building things for Sansar
 
 ----
 
-Avatar is 0.8m wide 1.71m (~5'8") tall
+Avatar is 0.8m wide, 1.71m (~5'8") tall
 
-Can step up 0.19m or 19cm
+----
 
-Can climb a 59 degree slope
+Steps
+
+Maximum rise 0.19m or 19cm
+
+Minimum run 0.26m or 26cm
+
+Ramp
+
+Max climable slope 59 degrees
 
 ----
 
