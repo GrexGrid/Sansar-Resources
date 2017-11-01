@@ -35,19 +35,20 @@ public class TriggerAnnounce : SceneObjectScript
     }
 
     // "Collision" events are really RigidBody events, and they get RigidBodyData.
-    private void OnCollide(CollisionEventType EventType, Sansar.Script.ComponentId ComponentId, Sansar.Script.ComponentId HitComponentId, ObjectPublic HitObject, CollisionEventPhase phase, ControlPointType hitControlPoint)
+    private void OnCollide(CollisionData obj)
     {
+        
         // Ignore hands:
-        if (hitControlPoint != ControlPointType.Invalid) return;
+        if (obj.HitControlPoint != ControlPointType.Invalid) return;
 
-        if (phase == CollisionEventPhase.TriggerEnter)
+        if (obj.Phase == CollisionEventPhase.TriggerEnter)
         {
-            ScenePrivate.Chat.MessageAllUsers($"Object {HitComponentId.ObjectId} has entered my volume!");
+            ScenePrivate.Chat.MessageAllUsers($"Object {obj.HitComponentId.ObjectId} has entered my volume!");
         }
         else
         {
             // HitObject might be null if the object or avatar is no longer in the scene, here we are just reporting the object id.
-            ScenePrivate.Chat.MessageAllUsers($"Object {HitComponentId.ObjectId} has left my volume!");
+            ScenePrivate.Chat.MessageAllUsers($"Object {obj.HitComponentId.ObjectId} has left my volume!");
         }
     }
 }

@@ -30,24 +30,24 @@ public class EventExample : SceneObjectScript
     }
 
     // This event will occur once each time a new agent joins the scene
-    void AddUser(string Action, SessionId User, string Data)
+    void AddUser(UserData data)
     {        
         // Track joined time
         DateTime joined = DateTime.Now;
 
         // Lookup the name of the agent. This is looked up now since the agent cannot be retrieved after they
         // leave the scene.
-        string name = ScenePrivate.FindAgent(User).AgentInfo.Name;
+        string name = ScenePrivate.FindAgent(data.User).AgentInfo.Name;
 
         // Store the information to 
-        userMap[User] = Tuple.Create(name,joined);
+        userMap[data.User] = Tuple.Create(name,joined);
     }
 
     // This event will occur once each time an agent leaves the scene
-    void RemoveUser(string Action, SessionId User, string Data)
+    void RemoveUser(UserData data)
     {
         // Retrieve the stored name and join time
-        Tuple<string,DateTime> info = userMap[User];
+        Tuple<string,DateTime> info = userMap[data.User];
         string name = info.Item1;
         DateTime joined = info.Item2;
 
@@ -56,6 +56,6 @@ public class EventExample : SceneObjectScript
         ScenePrivate.Chat.MessageAllUsers(string.Format("{0} was present for {1} seconds", name, elapsed.TotalSeconds));
 
         // Remove tracking info for the agent who left
-        userMap.Remove(User);
+        userMap.Remove(data.User);
     }
 }

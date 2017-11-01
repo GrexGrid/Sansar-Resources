@@ -11,17 +11,23 @@
 using Sansar.Script;
 using Sansar.Simulation;
 using System;
-using System.ComponentModel;
+//using System.ComponentModel;
 
 public class TeleportHotkeys : SceneObjectScript
 {
-    [Description("Hotkey to press to initiate a teleport")]
+    // [Description("Hotkey to press to initiate a teleport")] // Description not yet supported
+    [DefaultValue("Key_F12")]
+    [DisplayName("Teleport Hotkey")]
     public string TeleportHotkey = "Key_F12";
 
-    [Description("Comma separated list of experiences to visit.")]
+    // [Description("Comma separated list of experiences to visit.")] // Description not yet supported
+    [DefaultValue("mars-outpost-alpha")]
+    [DisplayName("Destination Scene")]
     public string Experiences = "mars-outpost-alpha, toppleton-toy-town, egyptian-tomb, colossus-rising, origin-cinema";
 
-    [Description("PersonHandle which owns the experiences.")]
+    // [Description("PersonHandle which owns the experiences.")] // Description not yet supported
+    [DefaultValue("sansar-studios")]
+    [DisplayName("Destination Owner")]
     public string PersonaHandle = "sansar-studios";
 
     // Parsed list of experience names
@@ -65,13 +71,13 @@ public class TeleportHotkeys : SceneObjectScript
         animationComponent.Subscribe(TeleportHotkey, TeleportToNext, false);
     }
 
-    void NewUser(string Action, SessionId User, string Data)
+    void NewUser(UserData data)
     {
         // Set up the the hotkey listener.
-        SubscribeToHotkey(User);
+        SubscribeToHotkey(data.User);
     }
 
-    private void TeleportToNext(string BehaviorName, ComponentId ComponentId)
+    private void TeleportToNext(AnimationData data)
     {
         // Find the index of the current experience in the list
         int index = Array.IndexOf(experiences, ScenePrivate.SceneInfo.LocationHandle);
@@ -81,10 +87,10 @@ public class TeleportHotkeys : SceneObjectScript
         index = (index + 1) % experiences.Length;
 
         // Lookup the agent
-        AgentPrivate agent = ScenePrivate.FindAgent(ComponentId.ObjectId);
+        AgentPrivate agent = ScenePrivate.FindAgent(data.ComponentId.ObjectId);
         if (agent == null)
         {
-            Log.Write($"Unable to find an agent for the component {ComponentId}");
+            Log.Write($"Unable to find an agent for the component {data.ComponentId}");
             return;
         }
 

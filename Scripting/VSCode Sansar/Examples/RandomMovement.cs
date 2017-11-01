@@ -9,6 +9,7 @@
  */
 using Sansar.Simulation;
 using System;
+using Sansar.Script;
 
 namespace RandomMovement
 {
@@ -55,12 +56,21 @@ namespace RandomMovement
         private Sansar.Vector Home;
 
         // Higher speeds mean faster objects - however it is mitigated by the mass of the object.
+        [DefaultValue(10)]
+        [Range(1.0, 100.0)]
+        [DisplayName("Object Speed")]
         public float Speed = 0;
 
         // From 0.0 to 1.0, affects how often a new direction is chosen.
+        [DefaultValue(0.75)]
+        [Range(0.0, 1.0)]
+        [DisplayName("Randomness")]
         public float Chaos = 0;
 
         // When the object is further than Range from Home it will be pushed back towards home.
+        [DefaultValue(10)]
+        [Range(1.0, 100.0)]
+        [DisplayName("Approximate Range")]
         public float Range = 10;
 
         // Override Init to set up event handlers and start coroutines.

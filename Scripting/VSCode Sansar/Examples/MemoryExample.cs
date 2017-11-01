@@ -1,11 +1,11 @@
 /* This content is licensed under the terms of the Creative Commons Attribution 4.0 International License.
  * When using this content, you must:
- * ï¿½    Acknowledge that the content is from the Sansar Knowledge Base.
- * ï¿½    Include our copyright notice: "ï¿½ 2017 Linden Research, Inc."
- * ï¿½    Indicate that the content is licensed under the Creative Commons Attribution-Share Alike 4.0 International License.
- * ï¿½    Include the URL for, or link to, the license summary at https://creativecommons.org/licenses/by-sa/4.0/deed.hi (and, if possible, to the complete license terms at https://creativecommons.org/licenses/by-sa/4.0/legalcode.
+ * •    Acknowledge that the content is from the Sansar Knowledge Base.
+ * •    Include our copyright notice: "© 2017 Linden Research, Inc."
+ * •    Indicate that the content is licensed under the Creative Commons Attribution-Share Alike 4.0 International License.
+ * •    Include the URL for, or link to, the license summary at https://creativecommons.org/licenses/by-sa/4.0/deed.hi (and, if possible, to the complete license terms at https://creativecommons.org/licenses/by-sa/4.0/legalcode.
  * For example:
- * "This work uses content from the Sansar Knowledge Base. ï¿½ 2017 Linden Research, Inc. Licensed under the Creative Commons Attribution 4.0 International License (license summary available at https://creativecommons.org/licenses/by/4.0/ and complete license terms available at https://creativecommons.org/licenses/by/4.0/legalcode)."
+ * "This work uses content from the Sansar Knowledge Base. © 2017 Linden Research, Inc. Licensed under the Creative Commons Attribution 4.0 International License (license summary available at https://creativecommons.org/licenses/by/4.0/ and complete license terms available at https://creativecommons.org/licenses/by/4.0/legalcode)."
  */
 
 using System;
@@ -19,6 +19,8 @@ using Sansar.Simulation;
 public class MemoryExample : SceneObjectScript
 {
     // Set the Report_Command in the object properties to the chat command used to get the memory report.
+    [DefaultValue("/memory")]
+    [DisplayName("Report Command")]
     public string Report_Command = "/memory";
 
     private MemoryUseLevel memoryLevel = MemoryUseLevel.Low;
@@ -27,16 +29,15 @@ public class MemoryExample : SceneObjectScript
     {
         //When the memory level changes, store the new memory level.
         // If used in a more complex script this event could be used to clear log history or otherwise reduce used memory
-        Memory.Subscribe((tracking, UseLevel) => { memoryLevel = UseLevel; });
+        Memory.Subscribe((data) => { memoryLevel = data.UseLevel; });
 
         // Set a chat subscription that will call ReportMemory when anyone says the Report_Command
-        ScenePrivate.Chat.Subscribe(0, null, (Channel, Source, SourceId, SourceScriptId, Message) => { if (Message == Report_Command) ReportMemory(ScenePrivate.FindAgent(SourceId)); });
+        ScenePrivate.Chat.Subscribe(0, null, (data) => { if (data.Message == Report_Command) ReportMemory(ScenePrivate.FindAgent(data.SourceId)); });
     }
 
     // Reports the last recorded memory level from an event along with current Memory data.
     void ReportMemory(AgentPrivate agent)
     {
-        //agent.SendChat(String.Format("Memory info: [{0}] {1}", memoryLevel.ToString(), Memory.ToString()))
-        Log.Write("Memory: " + memoryLevel.ToString() + "\nCurrent : " + Memory.UsedBytes.ToString() + "\nPeak : " + Memory.PeakUsedBytes.ToString());
+        agent.SendChat(String.Format("Memory info: [{0}] {1}", memoryLevel.ToString(), Memory.ToString()));
     }
 }

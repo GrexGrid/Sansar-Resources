@@ -12,16 +12,34 @@ public class CannonGameExample : SceneObjectScript
     private ClusterResource Projectile = null;
 
     // Public fields are shown in the object editor and can be set in the UI.
+    [DefaultValue(20)]
+    [Range(0, 100)]
+    [DisplayName("Projectile Force")]
     public float InitialSpeed = 20;
+
+    [DefaultValue(0.25)]
+    [Range(0.0f, 5.0f)]
+    [DisplayName("Delay Between Shots")]
     public float Delay = 0.0f;
 
     public SoundResource Fire_Sound = null;
     public SoundResource Hit_Sound = null;
+
+    [DefaultValue(0)]
+    [Range(-48, 12)]
+    [DisplayName("Sound Loudness")]
     public float Loudness = 0.0f;
 
+    [DisplayName("Spawn Point")]
     public Vector Spawn_Point_1;
+
+    [DisplayName("Spawn Point")]
     public Vector Spawn_Point_2;
+
+    [DisplayName("Spawn Point")]
     public Vector Spawn_Point_3;
+
+    [DisplayName("Spawn Point")]
     public Vector Spawn_Point_4;
 
     private string ListenEvent = "src_fire_event";  // Magic string for the "fire" button for scripts.
@@ -41,7 +59,7 @@ public class CannonGameExample : SceneObjectScript
 
         // If any spawn points are entered then TP targets that are hit.
         Teleport_On_Hit = (SpawnPoints.Count > 0);
-        ScenePrivate.User.Subscribe(User.AddUser, (string action, SessionId user, string data) => SubscribeToHotkey(user));
+        ScenePrivate.User.Subscribe(User.AddUser, (UserData data) => SubscribeToHotkey(data.User));
     }
 
     private void SubscribeToHotkey(SessionId userId)
@@ -57,7 +75,7 @@ public class CannonGameExample : SceneObjectScript
             if (agentObject.TryGetFirstComponent(out animationComponent))
             {
                 // Listen for the correct event to fire the projectile.
-                animationComponent.Subscribe(ListenEvent, (string name, ComponentId id) => { OnFire(animationComponent); }, false);
+                animationComponent.Subscribe(ListenEvent, (data) => { OnFire(animationComponent); }, false);
             }
         }
     }
@@ -100,7 +118,7 @@ public class CannonGameExample : SceneObjectScript
 
         StartCoroutine(RezCannonball, new_pos, Quaternion.FromLook(cameraForward, Vector.Up), vel);
 
-        Timer.Create(TimeSpan.FromSeconds(Delay), () => { animationComponent.Subscribe(ListenEvent, (string name, ComponentId id) => { OnFire(animationComponent); }, false); });
+        Timer.Create(TimeSpan.FromSeconds(Delay), () => { animationComponent.Subscribe(ListenEvent, (data) => { OnFire(animationComponent); }, false); });
     }
 
     public void RezCannonball(Sansar.Vector initial_pos, Sansar.Quaternion rotation, Sansar.Vector vel)

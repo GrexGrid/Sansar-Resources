@@ -18,10 +18,26 @@ using System.Text;
 // Inherit from AgentScript to get access to the Client to enable sending chat and dialogs to the agent
 public class Stats : SceneObjectScript
 {
+    [DefaultValue("/help")]
+    [DisplayName("Help")]
+    public string HelpCmd;
+
+    [DefaultValue("/sceneinfo")]
+    [DisplayName("Scene Info")]
+    public string ExpInfoCmd;
+
+    [DefaultValue("/listagents")]
+    [DisplayName("Agent List")]
+    public string ListAgentsCmd;
+
+    [DefaultValue("/mypos")]
+    [DisplayName("My Position")]
+    public string MyPosCmd;
+
     public override void Init()
     {
         // Displays all the registered chat commands
-        ChatCommands["/help"] = new ChatCommand
+        ChatCommands[HelpCmd] = new ChatCommand
         {
             Action = (String s, AgentPrivate AgentPrivate) =>
             {
@@ -38,7 +54,7 @@ public class Stats : SceneObjectScript
 
 
         // Displays the ExperienceInfo fields
-        ChatCommands["/xpinfo"] = new ChatCommand
+        ChatCommands[ExpInfoCmd] = new ChatCommand
         {
             Action = (String s, AgentPrivate AgentPrivate) =>
             {
@@ -74,7 +90,7 @@ public class Stats : SceneObjectScript
         };
 
         // Lists all agents currently in the scene
-        ChatCommands["/listagents"] = new ChatCommand
+        ChatCommands[ListAgentsCmd] = new ChatCommand
         {
             Action = (String s, AgentPrivate AgentPrivate) =>
             {
@@ -95,11 +111,20 @@ public class Stats : SceneObjectScript
         };
 
         // Report the current agent position
-        ChatCommands["/mypos"] = new ChatCommand
+        ChatCommands[MyPosCmd] = new ChatCommand
         {
             Action = (String message, AgentPrivate AgentPrivate) =>
             {
-                AgentPrivate.Client.SendChat($"You are at {ObjectPrivate.Position.ToString()}");
+                ObjectPrivate obj = ScenePrivate.FindObject(AgentPrivate.AgentInfo.ObjectId);
+                if (obj != null)
+                {
+                    AgentPrivate.Client.SendChat($"You are at {obj.Position}");
+                }
+                else
+                {
+                    AgentPrivate.Client.SendChat($"Where are you? Can not find your avatar object.");
+                }
+
             },
             Description = "Get your current position in world coordinates."
         };
@@ -107,16 +132,16 @@ public class Stats : SceneObjectScript
         ScenePrivate.Chat.Subscribe(0, Chat.User, OnChat);
     }
 
-    void OnChat(int Channel, string Source, SessionId SourceId, ScriptId SourceScriptId, string Message)
+    void OnChat(ChatData data)
     {
         // Try to parse the message as a chat command and ignore it if it is not a known command
-        var cmd = Message.Split(new char[] { ' ' })[0];
+        var cmd = data.Message.Split(new char[] { ' ' })[0];
         if (ChatCommands.ContainsKey(cmd))
         {
-            AgentPrivate agent=ScenePrivate.FindAgent(SourceId);
+            AgentPrivate agent=ScenePrivate.FindAgent(data.SourceId);
             if (agent != null)
             {
-                ChatCommands[cmd].Action(Message, agent);
+                ChatCommands[cmd].Action(data.Message, agent);
             }
         }
     }
@@ -142,17 +167,17 @@ public class Stats : SceneObjectScript
             }
 
             // Show "More" for initial pages and "Okay" for the final page
-            string right="More";
+            string right="MORE";
             if (i + maxLines >= lines.Count)
             {
-                right = "Okay";
+                right = "OK";
             }
 
             // Show the dialog and wait for a response
-            WaitFor(Agent.Client.UI.ModalDialog.Show, list.ToString(), "Cancel", right);
+            WaitFor(Agent.Client.UI.ModalDialog.Show, list.ToString(), "", right);
 
             // If "Cancel" or "Okay are clicked, exit the coroutine and stop showing the list.
-            if (Agent.Client.UI.ModalDialog.Response != "More")
+            if (Agent.Client.UI.ModalDialog.Response != "MORE")
             {
                 return;
             }

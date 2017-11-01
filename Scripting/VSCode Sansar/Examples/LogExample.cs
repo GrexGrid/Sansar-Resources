@@ -23,6 +23,8 @@ using System.Text;
 public class LogExample : SceneObjectScript
 {
     // The trigger word can be set in the editor
+    [DefaultValue("/console")]
+    [DisplayName("Chat Command")]
     public string Trigger = "/console";
 
     // Init will be called by the script loader after the constructor and after any public fields have been initialized.
@@ -73,20 +75,20 @@ public class LogExample : SceneObjectScript
         agent.SendChat("Console log cleared");
     }
     
-    void OnChat(int Channel, string Source, SessionId SourceId, ScriptId SourceScriptId, string Message)
+    void OnChat(ChatData data)
     {
         // ignore any messages that are not from an agent
-        if (SourceId != SessionId.Invalid)
+        if (data.SourceId != SessionId.Invalid)
         {
-            AgentPrivate agent= ScenePrivate.FindAgent(SourceId);
+            AgentPrivate agent= ScenePrivate.FindAgent(data.SourceId);
             if (agent == null)
             {
                 Log.Write(LogLevel.Warning, "Unable to find the agent who was talking.");
                 return;
             }
-            if (Message.StartsWith(Trigger))
+            if (data.Message.StartsWith(Trigger))
             {
-                string command = Message.Substring(Trigger.Length).Trim();
+                string command = data.Message.Substring(Trigger.Length).Trim();
 
                 if(chatHandlers.ContainsKey(command))
                 {

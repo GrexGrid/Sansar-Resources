@@ -37,10 +37,10 @@ namespace gun
         /// <param name="action"></param>
         /// <param name="userSessionId"></param>
         /// <param name="data"></param>
-        void NewUser(string action, SessionId userSessionId, string data)
+        void NewUser(UserData User)
         {
             // Set up the hot key listener.
-            SubscribeToHotkeys(userSessionId);
+            SubscribeToHotkeys(User.User);
         }
         /// <summary>
         /// Ties the avatars keys to the functions to enter or move our vehicle
@@ -58,7 +58,8 @@ namespace gun
             if (!agentObejct.TryGetFirstComponent(out animationComponent)) { Log.Write($"Unable to find an animation component on user {userId}"); return; }
             
             //Listen to the f key
-            animationComponent.Subscribe("Key_F", (BehaviorName, ComponentId) => fire(1, ComponentId), true);
+            //animationComponent.Subscribe("Key_F", (BehaviorName, ComponentId) => fire(1, ComponentId), true);
+            animationComponent.Subscribe("Key_F", fire);
         }
         #endregion
 
@@ -99,9 +100,9 @@ namespace gun
 
         #region responseTOKeypresses
         
-        private void fire(int nothing, ComponentId ComponentId)
+        private void fire(AnimationData obj)
         {
-            ObjectPrivate avObject = ScenePrivate.FindObject(ComponentId.ObjectId);
+            ObjectPrivate avObject = ScenePrivate.FindObject(obj.ComponentId.ObjectId);
             StartCoroutine(fireRez, avObject.Position,avObject.ForwardVector, Sansar.Quaternion.FromLook(avObject.ForwardVector, Sansar.Vector.Up));
         }
         public void fireRez(Sansar.Vector position, Sansar.Vector fwd, Sansar.Quaternion orientation)
@@ -131,13 +132,11 @@ namespace gun
         #endregion
 
 
-        private void CreateClusterHandler(
-          bool Success, string Message, Cluster ClusterReference
-        )
+        private void CreateClusterHandler(ScenePrivate.CreateClusterData obj )
         {
             try
             {
-                StartCoroutine(DestroyCluster, ClusterReference);
+                StartCoroutine(DestroyCluster, obj.ClusterReference);
             }
             catch (Exception)
             {

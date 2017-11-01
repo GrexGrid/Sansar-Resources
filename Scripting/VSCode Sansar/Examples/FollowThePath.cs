@@ -10,29 +10,42 @@
 
 using Sansar.Simulation;
 using System;
+using Sansar.Script;
 
 // Path Example will move a dynamic object along a route of points.
 public class FollowThePath : SceneObjectScript
 {
-#region Editor Properties
+    #region Editor Properties
     // Higher Force_Factor will move the object quicker. Too high and the object may overshoot positions.
+    [DefaultValue(10)]
+    [Range(1.0, 40.0)]
     public float Speed = 1;
-    
+
     // There is no support for arrays or lists in the property editor.
     // Give each potential position its own variable, which we will make a list from.
     // Note: Only 10 total parameters can be shown in the editor for a script, giving us 6 points to pick, in addition to the object's initial position.
+    [DefaultValue("Position 1")]
     public Sansar.Vector Relative_Position_1;
+    [DefaultValue("Position 2")]
     public Sansar.Vector Relative_Position_2;
+    [DefaultValue("Position 3")]
     public Sansar.Vector Relative_Position_3;
+    [DefaultValue("Position 4")]
     public Sansar.Vector Relative_Position_4;
+    [DefaultValue("Position 5")]
     public Sansar.Vector Relative_Position_5;
+    [DefaultValue("Position 6")]
     public Sansar.Vector Relative_Position_6;
+    [DefaultValue("Position 7")]
     public Sansar.Vector Relative_Position_7;
 
     // If not looping, after reaching the end it will warp to the start
+    [DefaultValue(true)]
+    [DisplayName("Looping")]
     public bool Loop = false;
 
     // If set, the object will TP any user that collides with it to this position in the region.
+    [DisplayName("Spawn Point")]
     public Sansar.Vector On_Collide_TP_Dest;
 #endregion
 

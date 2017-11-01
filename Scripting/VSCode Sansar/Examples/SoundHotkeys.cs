@@ -49,9 +49,9 @@ public class SoundHotkeys : SceneObjectScript
         return 24.0f * (multiplier - 1.0f);
     }
 
-    private void StartSound(string BehaviorName, ComponentId ComponentId)
+    private void StartSound(AnimationData obj)
     {
-        StopSound(BehaviorName, ComponentId);
+        StopSound(obj);
         if (playHandle == null)
         {
             if (audioComp == null)
@@ -65,7 +65,7 @@ public class SoundHotkeys : SceneObjectScript
         }
     }
 
-    private void StopSound(string BehaviorName, ComponentId ComponentId)
+    private void StopSound(AnimationData obj)
     {
         if (playHandle != null)
         {
@@ -98,13 +98,13 @@ public class SoundHotkeys : SceneObjectScript
         animationComponent.Subscribe(StopKey, StopSound);
     }
 
-    void NewUser(string Action, SessionId User, string Data)
+    void NewUser(UserData obj)
     {
-        AgentPrivate agent = ScenePrivate.FindAgent(User);
+        AgentPrivate agent = ScenePrivate.FindAgent(obj.User);
         if (ScenePrivate.SceneInfo.AvatarUuid == agent.AgentInfo.AvatarUuid)
         {
             // This is the experience owner, set up the key mappings for only this person
-            OnOwnerJoined(User);
+            OnOwnerJoined(obj.User);
         }
     }
 }

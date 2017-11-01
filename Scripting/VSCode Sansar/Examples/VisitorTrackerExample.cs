@@ -20,14 +20,19 @@ using Sansar.Simulation;
 // This example shows how to use coroutines and events to track agents entering and leaving the scene
 public class VisitorTrackerExample : SceneObjectScript
 {
-    public string OwnerName;
+    [DefaultValue(false)]
+    [DisplayName("Allow Anyone To Use")]
+    public bool PublicAccess;
+
+    [DefaultValue("/visitorlist")]
+    [DisplayName("Chat Command")]
     public string VisitorListCommand = "/visitorlist";
 
     public override void Init()
     {
         // Subscribe to Add User events
         // Events can be handled by anonymous methods
-        ScenePrivate.User.Subscribe(User.AddUser, SessionId.Invalid, (action, userSessionId, data) => StartCoroutine(TrackUser, userSessionId), true);
+        ScenePrivate.User.Subscribe(User.AddUser, SessionId.Invalid, (UserData data) => StartCoroutine(TrackUser, data.User), true);
 
         // listen for commands
         ScenePrivate.Chat.Subscribe(0, null, OwnerCommand);
@@ -90,29 +95,27 @@ public class VisitorTrackerExample : SceneObjectScript
         return message;
     }
 
-    public void OwnerCommand(int Channel, string Source, SessionId SourceId, ScriptId SourceScriptId, string Message)
+    public void OwnerCommand(ChatData data)
     {
         // Checking the message is actually the fastest thing we could do here. Discard anything that isn't the command we are looking for.
-        if (Message != VisitorListCommand)
+        if (data.Message != VisitorListCommand)
         {
             return;
         }
 
-        AgentPrivate agent = ScenePrivate.FindAgent(SourceId);
+        AgentPrivate agent = ScenePrivate.FindAgent(data.SourceId);
         if (agent == null)
         {   // Possible race condition and they already logged off.
             return;
         }
 
         // If no OwnerName is set, let anyone get the visitor list, otherwise only if the owner name matches.
-        if (OwnerName != null && OwnerName != ""
-            && agent.AgentInfo.Name != OwnerName)
+        if (PublicAccess
+            || agent.AgentInfo.AvatarUuid == ScenePrivate.SceneInfo.AvatarUuid)
         {
-            return;
+            // Dialogs are much easier in a coroutine with WaitFor
+            StartCoroutine(ShowStats, agent);
         }
-
-        // Dialogs are much easier in a coroutine with WaitFor
-        StartCoroutine(ShowStats, agent);
     }
 
     void ShowStats(AgentPrivate agent)

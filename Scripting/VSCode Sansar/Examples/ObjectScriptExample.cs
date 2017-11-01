@@ -13,6 +13,7 @@
  * the object when editing the scene.
  */
 using Sansar.Simulation;
+using Sansar.Script;
 using System;
 
 // To get full access to the Object API a script must extend from ObjectScript
@@ -20,7 +21,13 @@ public class ObjectScriptExample : SceneObjectScript
 {
     // Components can be set in the editor if the correct component types are added to the object
     public RigidBodyComponent RigidBody = null;
+
+    [DefaultValue(true)]
+    [DisplayName("Track Avatar Hits")]
     public bool TrackAgentHits = true;
+
+    [DefaultValue(true)]
+    [DisplayName("Track Object Hits")]
     public bool TrackObjectHits = true;
 
     public ObjectScriptExample()

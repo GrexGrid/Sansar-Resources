@@ -106,7 +106,7 @@ public class DoorOpener : SceneObjectScript
         ClosedPosition = DoorBody.GetPosition() + HingeOffset;
 
         // Only subscribe to collision events if the experience creator requested it
-        if (OpenOnCollision) DoorBody.Subscribe(CollisionEventType.CharacterContact, CollisionEvent);
+        if (OpenOnCollision) DoorBody.Subscribe(CollisionEventType.CharacterContact, Collide);
 
         // Only listen for chat if the experience creator wants outside sensors to trip this
         if (SensorNames != null) ScenePrivate.Chat.Subscribe(Channel, null, ChatMessage);
@@ -115,7 +115,7 @@ public class DoorOpener : SceneObjectScript
         StartCoroutine(UpdateLoop);
     }
 
-    private void CollisionEvent(CollisionEventType EventType, ComponentId ComponentId, ComponentId HitComponentId, ObjectPublic HitObject, CollisionEventPhase Phase, ControlPointType HitControlPoint)
+    private void Collide(CollisionData obj)
     {
         if (!Opening)
         {
@@ -125,12 +125,13 @@ public class DoorOpener : SceneObjectScript
         LatestOpenSignal = DateTime.Now;
     }
 
-
-    private void ChatMessage(int Channel, string Source, SessionId SourceId, ScriptId SourceScriptId, string Message)
+    
+    private void ChatMessage(ChatData obj)
+    //private void ChatMessage(int Channel, string Source, SessionId SourceId, ScriptId SourceScriptId, string Message)
     {
 
         // Parse the message
-        string[] Parts = Message.Split('|');
+        string[] Parts = obj.Message.Split('|');
         if (Parts.Length < 3) return;
 
         // Wrong kind of message
