@@ -22,6 +22,11 @@ public class template : SceneObjectScript
 
 //------Fiddely Bits--------
 
+    
+    //[Description("Chat Channel to listen on.")] // not used
+    [DefaultValue(0)]
+    [Range(0, 1000000)]
+    [DisplayName("Listen Channel")]
     public int ChatChannel = 0;
 
 //------Data Storage--------
@@ -30,14 +35,14 @@ public class template : SceneObjectScript
 
 //------Functions--------
 
-    void SendMessage(string Message)
+    void SendChatMessage(string Message)
     {
         StartCoroutine(DelayedMessage, Message);
     }//SendMessage
 
     void DelayedMessage(string Message)
     {
-        Wait(TimeSpan.FromSeconds(0.5));// has to be in a Coroutine
+        Wait(TimeSpan.FromSeconds(0.75));// has to be in a Coroutine
         ScenePrivate.Chat.MessageAllUsers(Message);
     }//DelayedMessage
 
@@ -45,10 +50,12 @@ public class template : SceneObjectScript
 
     public override void Init()
     {
-        Script.UnhandledException += UnhandledException; // catch errors and keep running unless fatal
-        ScenePrivate.Chat.Subscribe(ChatChannel, Chat.User, OnChat); // subscribe to user chat
-        ScenePrivate.User.Subscribe(User.AddUser, NewUser); // subscribe to new users
-        Log.Write(LogLevel.Info,"Init", GetType().Name + "template loaded");
+        Script.UnhandledException += UnhandledException; // Catch errors and keep running unless fatal
+        ScenePrivate.Chat.Subscribe(ChatChannel, Chat.User, OnChat); // Subscribe to user chat
+        ScenePrivate.User.Subscribe(User.AddUser, NewUser); // Subscribe to new users
+        Timer.Create(TimeSpan.FromSeconds(1 / 60), TimeSpan.FromSeconds(1 / 60), TimerTick); // Start a Timer, minimum timer 1/90 (90 fps)
+        Log.Write(LogLevel.Info,"Init", GetType().Name + " loaded"); // Let the end user know its working
+        
     }//init
 
     private void UnhandledException(object Sender, Exception Ex) 
@@ -56,11 +63,16 @@ public class template : SceneObjectScript
         Log.Write(LogLevel.Error, GetType().Name, Ex.Message + "\n" + Ex.StackTrace.Substring(0, 300));
     }//UnhandledException
 
-    void OnChat(int Channel, string Source, SessionId SourceId, ScriptId SourceScriptId, string Message)
+    void TimerTick()
     {
-        Message = Message.ToLower(); // lower case message
+        //tick tock
+    }//TimerTick
 
-        AgentPrivate agent=ScenePrivate.FindAgent(SourceId);
+    void OnChat(ChatData Data)
+    {
+        string Message = Data.Message.ToLower(); // lower case message
+
+        AgentPrivate agent=ScenePrivate.FindAgent(Data.SourceId);
         if (agent == null) return; // only listen to agents
 
         string[] word = Message.Split( new char[] { ' ' } ); // tokenise
@@ -69,13 +81,13 @@ public class template : SceneObjectScript
 
         if ( word[0] == "stuff" )
         {
-            SendMessage("heard stuff");
+            SendChatMessage("heard stuff");
         }
     }//onchat
 
-    void NewUser(string action, SessionId SourceId, string data)
+    private void NewUser(UserData User)
     {
-        AgentPrivate agent = ScenePrivate.FindAgent(SourceId);
+        AgentPrivate agent = ScenePrivate.FindAgent(User.User);
         if (agent == null) return;
 
         ObjectPrivate agentObject = ScenePrivate.FindObject(agent.AgentInfo.ObjectId);
@@ -89,11 +101,12 @@ public class template : SceneObjectScript
         }
     }//NewUser
 
-//------End Class--------
+    //------End Class--------
 
 }//class
 
 /*
 Brought to you by OldVamp Creations
 https://store.sansar.com/store/OldVamp
+OldVamp's uuid: bc2c162d-2753-44f0-af71-d144e2356281
 */
