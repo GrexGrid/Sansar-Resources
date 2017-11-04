@@ -17,7 +17,7 @@ public class SynchedSoundOnObject : SceneObjectScript
     // PUBLIC MEMBERS ------
 
     public SoundResource Sound;
-    [DefaultValue(100)]
+    [DefaultValue(100f)]
     [Range(-100f, 150f)]
     public float Volume_Diff_Percent;
     public bool Play_Once;

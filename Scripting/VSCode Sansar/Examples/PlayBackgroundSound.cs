@@ -17,8 +17,8 @@ public class SynchedSoundBackground : SceneObjectScript
     // PUBLIC MEMBERS ------
 
     public SoundResource Sound;
-    [DefaultValue(100)]
-    [Range(-100, 150)]
+    [DefaultValue(100f)]
+    [Range(-100f, 150f)]
     public float Volume_Diff_Percent;
     public bool Play_Once;
     public bool Dont_Sync;
