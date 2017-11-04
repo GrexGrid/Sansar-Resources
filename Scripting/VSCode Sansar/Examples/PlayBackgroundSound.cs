@@ -1,3 +1,9 @@
+/*
+This work uses content from the Sansar Knowledge Base. © 2017 Linden Research, Inc. 
+Licensed under the Creative Commons Attribution 4.0 International License (license summary available at https://creativecommons.org/licenses/by/4.0/ 
+and complete license terms available at https://creativecommons.org/licenses/by/4.0/legalcode).
+*/
+
 using System;
 
 using Sansar;
