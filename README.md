@@ -26,10 +26,15 @@ Max climable slope 59 degrees
 
 ----
 
-texturing objects
+Texturing Objects
 
 https://help.sansar.com/hc/en-us/articles/115002888226
 
-avatar attachments
+Avatar Attachments
 
 https://help.sansar.com/hc/en-us/articles/115003692623-Avatar-attachments-accessories
+
+Avatar Clothing
+
+https://help.sansar.com/hc/en-us/articles/115005693283-Rigged-clothing
+https://help.sansar.com/hc/en-us/articles/115005753363-Marvelous-Designer-creator-resources
