@@ -14,6 +14,8 @@ sansar_attachment.py : for Avatar attachments
 
 sansar_-y_forward.py : for obects with their fronts pointing in the -y direction
 
+sansar_rigged_clothing.py : reccomended export settings for rigged clothing
+
 ----
 
 FBX Export Presets go in
