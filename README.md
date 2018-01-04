@@ -39,9 +39,3 @@ Avatar Clothing
 https://help.sansar.com/hc/en-us/articles/115005753363-Marvelous-Designer-creator-resources
 
 https://help.sansar.com/hc/en-us/articles/115005693283-Rigged-clothing
-
-When importing the .fbx in blender check
-
-"automatically connect children"
-
-"automatic bone orientation"
