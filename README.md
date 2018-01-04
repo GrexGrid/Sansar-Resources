@@ -6,19 +6,19 @@ Items to help building things for Sansar
 
 ----
 
-Avatar is 0.8m wide, 1.71m (~5'8") tall
+Male avatar is 0.8m wide, 1.71m (~5'8") tall
 
 ----
 
-Steps
+Steps / Stairs
 
-Maximum rise 0.19m or 19cm
+Maximum rise (height) 0.19m or 19cm
 
-Minimum run 0.26m or 26cm
+Minimum run (depth) 0.26m or 26cm
 
 Ramp
 
-Max climable slope 59 degrees
+Maximum climbable slope 59 degrees
 
 ----
 
