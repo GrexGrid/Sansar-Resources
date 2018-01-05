@@ -33,13 +33,3 @@ in the url bar, enter, paste
 after it, enter
 
 If these folders do not exist, you will have to create them.
-
-----
-
-When importing the .fbx avatar rig in Blender check
-
-"automatically connect children"
-
-"automatic bone orientation"
-
-to make the bones appear more aligned.
