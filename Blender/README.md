@@ -33,3 +33,13 @@ in the url bar, enter, paste
 after it, enter
 
 If these folders do not exist, you will have to create them.
+
+----
+
+Fashion Rig
+
+don't align the bones on import, they are supposed to look funny
+
+bone scale should match the mesh scale
+
+you can apply scale on the bones so it is at 1.0, but leave the 90 degree rotation alone
